@@ -1,0 +1,5 @@
+syntax = "proto3";
+
+import "managment.proto";
+import "configs.proto";
+import "events.proto";

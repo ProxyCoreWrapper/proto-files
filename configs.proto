@@ -1,0 +1,43 @@
+syntax = "proto3";
+
+package backend;
+
+// Configs for controlled process
+service Configs {
+  // List configs
+  // Error codes: Internal
+  rpc ListConfigs(ListConfigsRequest) returns (ListConfigsResponse);
+
+  // Get the config content
+  // Error codes: Internal, NotFound
+  rpc GetConfig(GetConfigRequest)
+  returns (GetConfigResponse);
+
+  // Edit the config content. If the config doesn't exist, creates the config
+  // Error code: Internal
+  rpc EditConfig(EditConfigRequest) returns (EditConfigResponse);
+
+  // Delete the config
+  // Error codes: Internal, NotFound
+  rpc DeleteConfig(DeleteConfigRequest)
+  returns (DeleteConfigResponse);
+}
+
+message ListConfigsRequest {}
+
+message ListConfigsResponse { repeated string configs_ids = 1; }
+
+message GetConfigRequest { string config_id = 1; }
+
+message GetConfigResponse { string config = 1; }
+
+message EditConfigRequest {
+  string config_id = 1;
+  string config    = 2;
+}
+
+message EditConfigResponse {}
+
+message DeleteConfigRequest { string config_id = 1; }
+
+message DeleteConfigResponse {}

@@ -1,0 +1,50 @@
+syntax = "proto3";
+
+package backend;
+
+// Subprocess control
+service Managment {
+  // Either start or restart with the `config`
+  // Error codes: NotFound
+  rpc Restart(RestartRequest) returns (RestartResponse);
+
+  // Stop
+  rpc Stop(StopRequest) returns (StopResponse);
+
+  // Get state
+  rpc GetState(GetStateRequest) returns (GetStateResponse);
+
+  // Receive log stream
+  rpc ReceiveLog(ReceiveLogRequest) returns (stream LogRecord);
+}
+
+message RestartRequest { string config = 1; }
+
+message RestartResponse {}
+
+message StopRequest {}
+
+message StopResponse {}
+
+message GetStateRequest {}
+
+message GetStateResponse {
+  enum State {
+    DOWN    = 0;
+    RUNNING = 1;
+  }
+
+  State state = 1;
+}
+
+message ReceiveLogRequest {}
+
+message LogRecord {
+  enum FileDescriptor {
+    OUT = 0;
+    ERR = 1;
+  }
+
+  FileDescriptor fd  = 1;
+  string         log = 2;
+}
