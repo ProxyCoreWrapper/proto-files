@@ -5,7 +5,7 @@ package backend;
 // Cores control
 service Management {
   // Start the config
-  // Error codes: NotFound, FailedPrecondition
+  // Error codes: NotFound, FailedPrecondition (Config is already running), FailedPrecondition (Core tag is not valid)
   rpc Start(StartRequest) returns (StartResponse);
 
   // Restart all configs
