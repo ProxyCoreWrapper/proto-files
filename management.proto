@@ -1,0 +1,51 @@
+syntax = "proto3";
+
+package backend;
+
+// Cores control
+service Management {
+  // Start the config
+  // Error codes: NotFound, FailedPrecondition
+  rpc Start(StartRequest) returns (StartResponse);
+
+  // Restart all configs
+  rpc Restart(RestartRequest) returns (RestartResponse);
+
+  // Stop the config
+  // Error codes: NotFound, FailedPrecondition
+  rpc Stop(StopRequest) returns (StopResponse);
+
+  // Receive log stream
+  // Error codes: NotFound
+  rpc ReceiveLog(ReceiveLogRequest) returns (stream LogRecord);
+}
+
+message StartRequest {
+  string config_id = 1;
+}
+
+message StartResponse {}
+
+message RestartRequest {}
+
+message RestartResponse {}
+
+message StopRequest {
+  string config_id = 1;
+}
+
+message StopResponse {}
+
+message ReceiveLogRequest {
+  string config_id = 1;
+}
+
+message LogRecord {
+  enum FileDescriptor {
+    OUT = 0;
+    ERR = 1;
+  }
+
+  FileDescriptor fd  = 1;
+  string         log = 2;
+}

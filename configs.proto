@@ -2,11 +2,11 @@ syntax = "proto3";
 
 package backend;
 
-// Configs for controlled process
+// Configs management
 service Configs {
   // List configs
   // Error codes: Internal
-  rpc ListConfigs(ListConfigsRequest) returns (ListConfigsResponse);
+  rpc ListConfigs(ListConfigsRequest) returns (stream Config);
 
   // Get the config content
   // Error codes: Internal, NotFound
@@ -14,7 +14,7 @@ service Configs {
   returns (GetConfigResponse);
 
   // Edit the config content. If the config doesn't exist, creates the config
-  // Error code: Internal
+  // Error code: Internal, InvalidArgument (Core tag not found), InvalidArgument (Config id is empty)
   rpc EditConfig(EditConfigRequest) returns (EditConfigResponse);
 
   // Delete the config
@@ -25,11 +25,24 @@ service Configs {
 
 message ListConfigsRequest {}
 
-message ListConfigsResponse { repeated string configs_ids = 1; }
+message Config {
+  enum State {
+    DOWN    = 0;
+    RUNNING = 1;
+  }
 
-message GetConfigRequest { string config_id = 1; }
+  string config_id = 1;
+  string core_tag  = 2;
+  State  state     = 3;
+}
 
-message GetConfigResponse { string config = 1; }
+message GetConfigRequest {
+  string config_id = 1;
+}
+
+message GetConfigResponse {
+  string config = 1;
+}
 
 message EditConfigRequest {
   string config_id = 1;
@@ -39,6 +52,8 @@ message EditConfigRequest {
 
 message EditConfigResponse {}
 
-message DeleteConfigRequest { string config_id = 1; }
+message DeleteConfigRequest {
+  string config_id = 1;
+}
 
 message DeleteConfigResponse {}
