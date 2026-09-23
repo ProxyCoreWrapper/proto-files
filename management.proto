@@ -5,14 +5,15 @@ package backend;
 // Cores control
 service Management {
   // Start the config
-  // Error codes: NotFound, FailedPrecondition (Config is already running), FailedPrecondition (Core tag is not valid)
+  // Error codes: Internal, NotFound, FailedPrecondition (Config is already running), FailedPrecondition (Core tag is invalid)
   rpc Start(StartRequest) returns (StartResponse);
 
-  // Restart all configs
+  // Restart the config
+  // Error codes: Internal, NotFound, FailedPrecondition (Config is down), FailedPrecondition (Core tag is invalid)
   rpc Restart(RestartRequest) returns (RestartResponse);
 
   // Stop the config
-  // Error codes: NotFound, FailedPrecondition
+  // Error codes: NotFound, FailedPrecondition (Config is already down)
   rpc Stop(StopRequest) returns (StopResponse);
 
   // Receive log stream
@@ -26,7 +27,9 @@ message StartRequest {
 
 message StartResponse {}
 
-message RestartRequest {}
+message RestartRequest {
+  string config_id = 1;
+}
 
 message RestartResponse {}
 
