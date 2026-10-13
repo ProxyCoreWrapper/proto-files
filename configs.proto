@@ -13,7 +13,7 @@ service Configs {
   rpc GetConfig(GetConfigRequest)
   returns (GetConfigResponse);
 
-  // Edit the config content. If the config doesn't exist, creates the config
+  // Update the config. If the config doesn't exist, creates the config
   // Error code: Internal, InvalidArgument (Core tag not found), InvalidArgument (Config id is empty)
   rpc EditConfig(EditConfigRequest) returns (EditConfigResponse);
 
@@ -46,8 +46,8 @@ message GetConfigResponse {
 
 message EditConfigRequest {
   string config_id = 1;
-  string config    = 2;
-  string core_tag  = 3;
+  optional string config    = 2;
+  optional string core_tag  = 3;
 }
 
 message EditConfigResponse {}
