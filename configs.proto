@@ -14,7 +14,7 @@ service Configs {
   returns (GetConfigResponse);
 
   // Update the config. If the config doesn't exist, creates the config
-  // Error code: Internal, InvalidArgument (Core tag not found), InvalidArgument (Config id is empty)
+  // Error code: Internal, InvalidArgument (Core tag not found), InvalidArgument (Config id doesn't match "[\w-]+"), InvalidArgument (To create a config both config and core tag must be provided)
   rpc EditConfig(EditConfigRequest) returns (EditConfigResponse);
 
   // Delete the config
