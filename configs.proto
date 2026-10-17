@@ -9,7 +9,7 @@ service Configs {
   rpc ListConfigs(ListConfigsRequest) returns (stream Config);
 
   // Get the config content
-  // Error codes: Internal, NotFound
+  // Error codes: Internal, NotFound, InvalidArgument (Config id doesn't match "[\w-]+")
   rpc GetConfig(GetConfigRequest)
   returns (GetConfigResponse);
 
@@ -18,7 +18,7 @@ service Configs {
   rpc EditConfig(EditConfigRequest) returns (EditConfigResponse);
 
   // Delete the config
-  // Error codes: Internal, NotFound
+  // Error codes: Internal, NotFound, InvalidArgument (Config id doesn't match "[\w-]+")
   rpc DeleteConfig(DeleteConfigRequest)
   returns (DeleteConfigResponse);
 }

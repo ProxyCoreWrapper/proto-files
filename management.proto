@@ -5,19 +5,19 @@ package backend;
 // Cores control
 service Management {
   // Start the config
-  // Error codes: Internal, NotFound, FailedPrecondition (Config is already running), FailedPrecondition (Core tag is invalid)
+  // Error codes: Internal, NotFound, FailedPrecondition (Config is already running), FailedPrecondition (Core tag is invalid), InvalidArgument (Config id doesn't match "[\w-]+")
   rpc Start(StartRequest) returns (StartResponse);
 
   // Restart the config
-  // Error codes: Internal, NotFound, FailedPrecondition (Config is down), FailedPrecondition (Core tag is invalid)
+  // Error codes: Internal, NotFound, FailedPrecondition (Config is down), FailedPrecondition (Core tag is invalid), InvalidArgument (Config id doesn't match "[\w-]+")
   rpc Restart(RestartRequest) returns (RestartResponse);
 
   // Stop the config
-  // Error codes: NotFound, FailedPrecondition (Config is already down)
+  // Error codes: NotFound, FailedPrecondition (Config is already down), InvalidArgument (Config id doesn't match "[\w-]+")
   rpc Stop(StopRequest) returns (StopResponse);
 
   // Receive log stream
-  // Error codes: NotFound
+  // Error codes: NotFound, InvalidArgument (Config id doesn't match "[\w-]+")
   rpc ReceiveLog(ReceiveLogRequest) returns (stream LogRecord);
 }
 
